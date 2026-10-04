@@ -47,7 +47,7 @@ World Bank API    ─┼─> Python parser ─> staging CSVs ─> SQL models (Du
   <img src="images/04_ticket_size.png" width="49%" />
 </p>
 
-**Power BI:** a 3-page dashboard built on the same marts. [`powerbi/`](powerbi) has the DAX measures (time intelligence with `DATEADD`, `REMOVEFILTERS`-based KPIs), a theme matching these charts, and a [build guide](powerbi/BUILD_GUIDE.md).
+**Power BI:** a 3-page dashboard built on the same marts. [`powerbi/`](powerbi) has the DAX measures (time intelligence with `DATEADD`, `REMOVEFILTERS`-based KPIs) and a theme matching these charts.
 
 ## Limitations
 
@@ -56,14 +56,7 @@ World Bank API    ─┼─> Python parser ─> staging CSVs ─> SQL models (Du
 - **UPI figures start in 2021-22**, the first year in RBI's current handbook table. Earlier figures from other sources weren't mixed in.
 - **The forecast has four years of monthly history** and tends to under-predict when cash growth accelerates.
 
-## Reproduce
-
-```bash
-pip install -r requirements.txt
-python src/parse_sources.py       # RBI Excel + World Bank JSON -> data/staging/
-python src/run_sql.py             # SQL models + data-quality checks -> data/marts/
-jupyter nbconvert --to notebook --execute notebooks/upi_cash_analysis.ipynb
-```
+## Project structure
 
 ```
 upi-cash-paradox/
@@ -73,7 +66,7 @@ upi-cash-paradox/
 ├── sql/               # 01_staging → 07_data_quality
 ├── src/               # parse_sources.py, run_sql.py, style.py
 ├── notebooks/         # upi_cash_analysis.ipynb (+ .py source)
-├── powerbi/           # measures.dax, theme.json, BUILD_GUIDE.md
+├── powerbi/           # DAX measures, report theme
 └── images/
 ```
 
