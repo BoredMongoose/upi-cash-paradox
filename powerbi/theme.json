@@ -1,0 +1,16 @@
+{
+  "name": "UPI Cash Paradox",
+  "dataColors": ["#2a78d6", "#eb6834", "#1baf7a", "#4a3aa7", "#e87ba4", "#eda100", "#008300", "#e34948"],
+  "background": "#fcfcfb",
+  "foreground": "#0b0b0b",
+  "tableAccent": "#2a78d6",
+  "good": "#008300",
+  "bad": "#e34948",
+  "neutral": "#b9b8b2",
+  "textClasses": {
+    "callout": { "fontSize": 28, "fontFace": "Segoe UI Semibold", "color": "#0b0b0b" },
+    "title":   { "fontSize": 13, "fontFace": "Segoe UI Semibold", "color": "#0b0b0b" },
+    "header":  { "fontSize": 12, "fontFace": "Segoe UI Semibold", "color": "#0b0b0b" },
+    "label":   { "fontSize": 10, "fontFace": "Segoe UI", "color": "#52514e" }
+  }
+}

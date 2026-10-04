@@ -1,0 +1,13 @@
+month_num,month_name,avg_mom_pct,years_observed
+1,Jan,1.64,4
+2,Feb,1.4,4
+3,Mar,1.8,4
+4,Apr,1.91,4
+5,May,0.74,5
+6,Jun,-0.2,3
+7,Jul,-0.84,3
+8,Aug,-0.16,3
+9,Sep,-0.48,3
+10,Oct,0.98,3
+11,Nov,0.9,4
+12,Dec,0.63,4

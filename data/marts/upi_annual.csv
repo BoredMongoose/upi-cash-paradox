@@ -1,0 +1,6 @@
+fiscal_year,fy_start,upi_txns_bn,upi_value_lakh_cr,upi_avg_ticket_rupees,upi_share_of_payments_pct,upi_txn_growth_pct,cash_lakh_cr,gdp_lakh_cr,upi_value_to_gdp_pct,upi_value_vs_cash_stock_x,upi_txns_per_person_per_month
+2021-22,2021,46.0,84.2,1831.0,63.23,,31.34,229.19,36.7,2.7,2.7
+2022-23,2022,83.7,139.1,1662.0,73.02,82.2,33.79,261.18,53.3,4.1,4.9
+2023-24,2023,131.1,200.0,1525.0,79.43,56.6,35.11,289.84,69.0,5.7,7.6
+2024-25,2024,185.9,260.6,1402.0,83.5,41.7,37.24,318.07,81.9,7.0,10.7
+2025-26,2025,241.6,314.2,1301.0,85.59,30.0,41.66,346.36,90.7,7.5,13.8

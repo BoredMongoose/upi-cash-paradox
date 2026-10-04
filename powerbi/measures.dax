@@ -1,0 +1,115 @@
+// ============================================================================
+//  UPI vs Cash dashboard: tables and measures
+//  Paste each block into Power BI: Modeling > New table / New measure
+//  Source tables (Get data > Text/CSV, from data/marts/):
+//    cash_annual, upi_annual, payments, cash_monthly, cash_forecast, cash_seasonality
+// ============================================================================
+
+
+// ---------- Calculated tables (Modeling > New table) -------------------------
+
+// One row per fiscal year, shared by the annual tables so they can sit on one axis
+FiscalYear =
+DISTINCT (
+    UNION (
+        SELECTCOLUMNS ( cash_annual, "fy_start", cash_annual[fy_start], "Fiscal year", cash_annual[fiscal_year] ),
+        SELECTCOLUMNS ( payments, "fy_start", payments[fy_start], "Fiscal year", payments[fiscal_year] )
+    )
+)
+
+// Daily calendar covering the monthly data and the forecast (mark as date table)
+Calendar =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2022, 4, 1 ), DATE ( 2027, 5, 31 ) ),
+    "Month", DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 ),
+    "Month label", FORMAT ( [Date], "mmm yyyy" )
+)
+
+
+// ---------- Cash and the economy (annual) -------------------------------------
+
+Cash (₹ lakh cr) = SUM ( cash_annual[cash_lakh_cr] )
+
+GDP (₹ lakh cr) = SUM ( cash_annual[gdp_lakh_cr] )
+
+// Format as percentage, 1 decimal
+Cash to GDP = DIVIDE ( [Cash (₹ lakh cr)], [GDP (₹ lakh cr)] )
+
+// REMOVEFILTERS clears the axis filter on 'Fiscal year' so the previous year can be reached
+Cash growth =
+VAR ThisYear = MAX ( FiscalYear[fy_start] )
+VAR PrevYear =
+    CALCULATE ( [Cash (₹ lakh cr)], REMOVEFILTERS ( FiscalYear ), FiscalYear[fy_start] = ThisYear - 1 )
+RETURN
+    DIVIDE ( [Cash (₹ lakh cr)] - PrevYear, PrevYear )
+
+// KPI cards: value for the latest fiscal year in the current selection
+Cash, latest year =
+VAR LastYear = MAX ( FiscalYear[fy_start] )
+RETURN
+    CALCULATE ( [Cash (₹ lakh cr)], REMOVEFILTERS ( FiscalYear ), FiscalYear[fy_start] = LastYear )
+
+Cash to GDP, latest year =
+VAR LastYear = MAX ( FiscalYear[fy_start] )
+RETURN
+    CALCULATE ( [Cash to GDP], REMOVEFILTERS ( FiscalYear ), FiscalYear[fy_start] = LastYear )
+
+
+// ---------- UPI and other payment systems (annual) ----------------------------
+
+UPI value (₹ lakh cr) =
+CALCULATE ( SUM ( payments[value_lakh_cr] ), payments[system] = "UPI" )
+
+UPI transactions (bn) =
+CALCULATE ( SUM ( payments[volume_bn] ), payments[system] = "UPI" )
+
+// Format as percentage
+UPI value to GDP = DIVIDE ( [UPI value (₹ lakh cr)], [GDP (₹ lakh cr)] )
+
+// Share of all non-cash transactions (number, not value)
+Share of payments =
+DIVIDE (
+    SUM ( payments[volume_bn] ),
+    CALCULATE ( SUM ( payments[volume_bn] ), REMOVEFILTERS ( payments[system], payments[category] ) )
+)
+
+UPI share of payments =
+CALCULATE ( [Share of payments], payments[system] = "UPI" )
+
+// Rupees per transaction: value is in ₹ lakh crore (1e12), volume in billions (1e9)
+Average payment (₹) =
+DIVIDE ( SUM ( payments[value_lakh_cr] ) * 1e12, SUM ( payments[volume_bn] ) * 1e9 )
+
+UPI value, latest year =
+VAR LastYear = MAX ( FiscalYear[fy_start] )
+RETURN
+    CALCULATE ( [UPI value (₹ lakh cr)], REMOVEFILTERS ( FiscalYear ), FiscalYear[fy_start] = LastYear )
+
+UPI share, latest year =
+VAR LastYear = MAX ( FiscalYear[fy_start] )
+RETURN
+    CALCULATE ( [UPI share of payments], REMOVEFILTERS ( FiscalYear ), FiscalYear[fy_start] = LastYear )
+
+
+// ---------- Cash through the year (monthly) and forecast ----------------------
+
+Cash, monthly (₹ lakh cr) = SUM ( cash_monthly[cash_lakh_cr] )
+
+// Format as percentage. Blank for the first 12 months (no year-ago value)
+Cash YoY, monthly =
+VAR Current = [Cash, monthly (₹ lakh cr)]
+VAR YearAgo =
+    CALCULATE ( [Cash, monthly (₹ lakh cr)], DATEADD ( 'Calendar'[Date], -12, MONTH ) )
+RETURN
+    IF ( NOT ISBLANK ( YearAgo ) && NOT ISBLANK ( Current ), DIVIDE ( Current - YearAgo, YearAgo ) )
+
+Forecast (₹ lakh cr) = SUM ( cash_forecast[forecast] )
+
+Forecast low (80%) = SUM ( cash_forecast[low_80] )
+
+Forecast high (80%) = SUM ( cash_forecast[high_80] )
+
+Forecast, May 2027 =
+CALCULATE ( [Forecast (₹ lakh cr)], cash_forecast[month] = DATE ( 2027, 5, 1 ) )
+
+Typical monthly change = AVERAGE ( cash_seasonality[avg_mom_pct] ) / 100
