@@ -8,7 +8,7 @@ In 2025-26 Indians made **242 billion UPI payments** worth ₹314 lakh crore. Ov
 
 | # | Finding | Evidence |
 |---|---|---|
-| 1 | **Relative to the economy, cash hasn't grown or shrunk.** It's **12.0% of GDP**, the same as in 2014-15, before UPI existed. | Between 11.7% and 12.8% of GDP in every year since 2010-11, except demonetisation (8.9%) and COVID (14.8%) |
+| 1 | **Relative to the economy, cash hasn't grown or shrunk.** It's **12.0% of GDP**, the same as in 2014-15, before UPI existed. | 11.9–12.8% in the six years before demonetisation, 11.7–12.1% in the last three. Demonetisation (8.9%) and COVID (14.8%) pushed it away for a few years each, and it came back |
 | 2 | **UPI replaced cash as a way to *pay*, not as a way to *hold* money.** | UPI's yearly value grew from **37% to 91% of GDP** in four years, and it handles **86%** of non-cash transactions |
 | 3 | **UPI took the small, everyday payments.** | The average UPI payment fell from **₹1,831 to ₹1,301**. Debit-card transactions fell **67%**, and their average size nearly doubled |
 | 4 | **Cash behaves like savings.** It's hoarded in a crisis and follows a seasonal rhythm. | +16.6% in 2020-21 while GDP *shrank*. It builds every October–May and drains every June–September |

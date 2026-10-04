@@ -19,8 +19,9 @@
 #
 # **Short answer:**
 # 1. **Relative to the economy, cash hasn't grown or shrunk.** It's **12.0% of GDP**, exactly where it was in
-#    2014-15, before UPI existed. Apart from two shocks (demonetisation and COVID), it has stayed between
-#    11.7% and 12.8% of GDP for 16 years. Cash rises because the economy does.
+#    2014-15, before UPI existed. It ranged 11.9–12.8% in the six years before demonetisation and
+#    11.7–12.1% in the last three. Each shock (demonetisation, COVID) pushed it away for a few years, and it
+#    came back. Cash rises because the economy does.
 # 2. **UPI replaced cash as a way to *pay*, not as a way to *hold* money.** UPI's yearly value grew from 37% to
 #    91% of GDP in four years, and the average UPI payment fell from ₹1,831 to ₹1,301. That's small,
 #    everyday spending that used to be cash. Debit-card payments at shops fell 67%.
@@ -104,7 +105,7 @@ save(fig, "01_upi_vs_cash.png")
 plt.show()
 
 # %% [markdown]
-# ## 3. Cash has stayed at about 12% of GDP for 16 years
+# ## 3. Cash keeps returning to about 12% of GDP
 #
 # The two exceptions are both shocks to *trust and liquidity*, not to payment habits. Demonetisation
 # (Nov 2016) mechanically removed 86% of notes. COVID (2020-21) made households hoard cash while GDP fell.
@@ -112,7 +113,7 @@ plt.show()
 # %%
 fig, ax = plt.subplots(figsize=(11, 5.5))
 ax.fill_between(cash.fy_start, 11.7, 12.8, color=BLUE_LIGHT, alpha=0.6, lw=0)
-ax.text(2010.1, 12.95, "normal range: 11.7–12.8%", color=BLUE, fontsize=9.5)
+ax.text(2010.1, 12.95, "range before 2016 and since 2023: 11.7–12.8%", color=BLUE, fontsize=9.5)
 ax.plot(cash.fy_start, cash.cash_to_gdp_pct, color=BLUE, lw=2.5, marker="o", ms=5)
 notes = {2016: ("Demonetisation\n8.9%", (0, -38)), 2020: ("COVID hoarding\n14.8%", (0, 14)),
          2023: ("₹2000 notes\nwithdrawn", (0, -42))}
